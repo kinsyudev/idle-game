@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",                 
+      "module": "ESNext",                  
+      "lib": ["ESNext", "DOM"],           
+      "strict": true,                     
+      "esModuleInterop": true,             
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,                
+      "moduleResolution": "Node",         
+      "resolveJsonModule": true,           
+      "sourceMap": true,                   
+      "outDir": "./dist",                  
+      "rootDir": "./src",                  
+      "allowJs": false,                    
+      "noImplicitAny": true,               
+      "noUnusedLocals": true,              
+      "noUnusedParameters": true,          
+      "noImplicitReturns": true,           
+      "noFallthroughCasesInSwitch": true  
+    },
+    "include": ["src"],                   // Include the 'src' folder for your main TypeScript files
+    "exclude": ["node_modules", "dist", "vite.config.ts"] // Exclude files that are outside of src, like config files
+  }
+  

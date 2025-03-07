@@ -34,6 +34,15 @@ export const GAME_CONFIG = {
     panSpeed: 1.0,
   },
 
+  // UI settings
+  ui: {
+    fpsCounter: {
+      show: true,
+      updateInterval: 500, // ms
+      position: { x: 10, y: 10 },
+    },
+  },
+
   // Debug settings
   debug: {
     showGrid: true,

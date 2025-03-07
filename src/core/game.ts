@@ -1,8 +1,9 @@
 // src/core/Game.ts
-import { Application, Ticker } from "pixi.js";
+import { Application, Container, Ticker } from "pixi.js";
 import TileMap from "../world/tile-map";
 import Camera from "./camera";
 import { GAME_CONFIG } from "../config/game-config";
+import FPSCounter from "../ui/fps-counter";
 
 /**
  * Main game class
@@ -13,6 +14,10 @@ export class Game {
   // these will be initialized in the init method before being used
   private _tileMap!: TileMap;
   private _camera!: Camera;
+
+  private _fpsCounter!: FPSCounter;
+  private _uiContainer!: Container;
+
   private _isInitialized: boolean = false;
 
   /**
@@ -45,6 +50,14 @@ export class Game {
     // Create camera
     this._camera = new Camera(this._tileMap);
 
+    // Create UI container (for elements that shouldn't move with the camera)
+    this._uiContainer = new Container();
+    this._app.stage.addChild(this._uiContainer);
+
+    // Create and add FPS counter to UI container
+    this._fpsCounter = new FPSCounter();
+    this._uiContainer.addChild(this._fpsCounter);
+
     // Set up game loop - fixed the ticker callback signature
     this._app.ticker.add(this.update, this);
 
@@ -62,6 +75,9 @@ export class Game {
 
     // Update tile map - pass the ticker directly
     this._tileMap.update(ticker);
+
+    // Update FPS counter
+    this._fpsCounter.update(ticker);
 
     // Additional update logic goes here
   }
@@ -93,6 +109,17 @@ export class Game {
    */
   public get camera(): Camera {
     return this._camera;
+  }
+
+  /**
+   * Toggle FPS counter visibility
+   */
+  public toggleFPSCounter(): void {
+    if (this._fpsCounter) {
+      this._fpsCounter.visible = !this._fpsCounter.visible;
+      // Also update the config
+      GAME_CONFIG.ui.fpsCounter.show = this._fpsCounter.visible;
+    }
   }
 }
 

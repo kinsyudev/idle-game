@@ -20,48 +20,18 @@ export class TileMap extends Container {
     this.sortableChildren = true;
 
     // Position the tilemap on screen
-    // Center the map horizontally, adjust vertically to account for cube height
     this.x = GAME_CONFIG.display.defaultWidth / 2;
     this.y =
       GAME_CONFIG.map.initialOffsetY +
-      GAME_CONFIG.display.defaultHeight / 4 -
-      (GAME_CONFIG.map.rows * GAME_CONFIG.tile.height) / 4;
+      GAME_CONFIG.display.defaultWidth / 2 -
+      (GAME_CONFIG.map.rows * GAME_CONFIG.tile.height) / 2;
 
     // Generate the tile grid
     this.generateTiles(renderer);
   }
 
-  // Optionally, you can add a method to create tiles with varied heights for terrain
-  private createElevatedTile(
-    renderer: Renderer,
-    gridPos: GridCoord,
-    type: TileType,
-    elevation: number = 0
-  ): Tile {
-    // Create base tile data
-    const tileData: TileData = {
-      type,
-      walkable: type !== TileType.WATER && type !== TileType.ROCK,
-      buildable: type === TileType.GRASS || type === TileType.SAND,
-      elevation, // Store elevation in tile data
-    };
-
-    // Create texture
-    const texture = createTileTexture(renderer, type);
-
-    // Create tile
-    const tile = new Tile(gridPos, texture, tileData);
-
-    // Adjust y position based on elevation
-    if (elevation > 0) {
-      tile.y -= elevation * (GAME_CONFIG.tile.cubeHeight / 4);
-    }
-
-    return tile;
-  }
-
   /**
-   * Generate tiles for the map with terrain elevation
+   * Generate tiles for the map
    */
   private generateTiles(renderer: Renderer): void {
     const { rows, cols } = GAME_CONFIG.map;
@@ -93,7 +63,7 @@ export class TileMap extends Container {
           buildable: tileType === TileType.GRASS || tileType === TileType.SAND,
         };
 
-        // Create texture for the tile (still using the 3D cube texture)
+        // Create texture for the tile
         const texture = createTileTexture(renderer, tileType);
 
         // Create grid position
@@ -111,52 +81,6 @@ export class TileMap extends Container {
       }
     }
   }
-
-  // /**
-  //  * Generate a simple elevation map with small hills and valleys
-  //  */
-  // private generateSimpleElevationMap(rows: number, cols: number): number[][] {
-  //   const elevationMap: number[][] = Array(rows)
-  //     .fill(0)
-  //     .map(() => Array(cols).fill(0));
-
-  //   // Create a couple of "mountain" peaks
-  //   const peaks = [
-  //     { row: Math.floor(rows / 4), col: Math.floor(cols / 4), height: 3 },
-  //     {
-  //       row: Math.floor((rows * 3) / 4),
-  //       col: Math.floor((cols * 3) / 4),
-  //       height: 4,
-  //     },
-  //   ];
-
-  //   // Generate elevation based on distance from peaks
-  //   for (let row = 0; row < rows; row++) {
-  //     for (let col = 0; col < cols; col++) {
-  //       // Find the closest peak and set elevation based on distance
-  //       let maxElevation = 0;
-
-  //       for (const peak of peaks) {
-  //         const distance = Math.sqrt(
-  //           Math.pow(row - peak.row, 2) + Math.pow(col - peak.col, 2)
-  //         );
-
-  //         // Set elevation based on distance from peak
-  //         const elevationFromPeak = Math.max(
-  //           0,
-  //           Math.floor(peak.height - distance / 2)
-  //         );
-
-  //         // Keep the highest elevation if multiple peaks affect this tile
-  //         maxElevation = Math.max(maxElevation, elevationFromPeak);
-  //       }
-
-  //       elevationMap[row][col] = maxElevation;
-  //     }
-  //   }
-
-  //   return elevationMap;
-  // }
 
   /**
    * Handle tile click

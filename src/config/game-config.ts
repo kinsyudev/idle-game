@@ -16,6 +16,11 @@ export const GAME_CONFIG = {
     baseColor: 0x88cc88,
     selectedColor: 0xff0000,
     outlineColor: 0xffffff,
+    // New 3D properties
+    heightRatio: 0.5, // Height of the 3D effect as a ratio of tile height
+    topFaceBrightness: 0,     // Original brightness
+    leftFaceBrightness: -40,  // Darker
+    rightFaceBrightness: -20, // Slightly darker
   },
 
   // Map settings

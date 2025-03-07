@@ -11,11 +11,13 @@ export const GAME_CONFIG = {
 
   // Tile settings
   tile: {
-    width: 64,
-    height: 32,
+    width: 64, // Width of the tile
+    height: 64, // Height of the diamond (top face)
+    cubeHeight: 64, // Total height of the cube (add this)
     baseColor: 0x88cc88,
     selectedColor: 0xff0000,
     outlineColor: 0xffffff,
+    highlightOpacity: 0.8, // Add this for consistent hover effect
   },
 
   // Map settings

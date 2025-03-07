@@ -43,7 +43,7 @@ const tileTexture = createIsometricTileTexture();
 // Isometric tilemap container
 const tilemap = new Container();
 tilemap.x = app.screen.width / 2; // Center it
-tilemap.y = 100; // Offset for visibility
+tilemap.y = app.screen.height / 2 - (TILE_HEIGHT * ROWS) / 2; // Offset for visibility
 
 // Convert grid (row, col) to isometric (x, y)
 function isoPosition(row: number, col: number): { x: number; y: number } {
